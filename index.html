@@ -1,0 +1,439 @@
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet"></head>
+
+        <!-- 240426_0145 -->
+        <style>
+            body {
+                background-color: #dfdfdf;
+                font-family: 'DotGothic16', sans-serif;
+                height: 100vh;
+                margin: 0;
+            }
+            .hoge img {
+                text-align: center;
+                width: 70%;
+                margin: 0px 15%;
+            }
+
+            h1 {
+                font-size: 30px;
+                margin: 0;
+                color: #dadada;
+            }
+            p {
+                font-size: 15px;
+                margin: 0;
+                color: #dadada;
+                text-align: center;
+            }
+
+            .field_header h1 {
+                font-size: 30px;
+                margin: 10px 0px 0px 30px;
+            }
+            .field_header p {
+                font-size: 25px;
+                text-align: center;
+            }
+            #now_str {
+                position: fixed;
+                top: 10px;
+                right: 30px;
+                font-size: 20px;
+            }
+
+            /* 時間帯によって色を変える */
+            
+            .morning {
+                background-color: #77b8c5;
+                color: #404040;
+            }
+
+            .afternoon {
+                background-color: #c3c577;
+                color: #404040;
+            }
+
+            .night {
+                background-color: #3d435c;
+                color: #dadada;
+                color: #404040;
+                
+            }
+
+
+
+            /* ボタンをdiv.box全体に張るため */
+            .container {text-align: center;}
+            .box {
+                position: relative;
+                height: 200px;
+                width: 360px;
+                margin: 0px calc(50% - 180px);
+            }
+            .box button {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                /* buttonのスタイル削除 */
+                background-color: transparent;
+                /* border: none; */
+                cursor: pointer;
+                outline: none;
+                padding: 0;
+                appearance: none;
+            }
+
+
+            /*  */
+            /* ヘッダー */
+            .field_header {
+                height: 100px;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background-color: #111e35;
+                z-index: 998;
+            }
+            .message {
+                display: flex;
+                justify-content: center;
+            }
+            .field_tab {
+                height: 40px;
+                width: 100%;
+                position: fixed;
+                top: 100px;
+                left: 0;
+                background-color: #111e35;
+                display: flex;
+                flex-direction: row;
+                z-index: 998;
+            }
+            .field_tab p {
+                margin-top: 0px;
+                font-size: 30px;
+            }
+            .tab_time {
+                width: calc(100% * 0.1);
+
+            }
+            .tab_youbi {
+                width: calc((100% - (100% * 0.1))/ 7);
+            }
+
+            .field_shujitsu {
+                height: 20px;
+                width: 100%;
+                position: fixed;
+                top: 140px;
+                left: 0;
+                background-color: #111e35;
+                display: flex;
+                flex-direction: row;
+                z-index: 998;
+            }
+            .shujitsu_time {
+                width: calc(100% * 0.1);
+
+            }
+            .shujitsu_youbi {
+                width: calc((100% - (100% * 0.1))/ 7);
+            }
+            .shujitsu_ari p{
+                height: 100%;
+                width: 100%;
+            }
+            .shujitsu_nashi {
+                width: 0;
+                height: 0;
+            }
+
+
+            /* カレンダーのスタイル */
+            .field_all {
+                height: calc(100vh - 150px);
+                background-color: #111e35;
+            }
+            .field_calendar {
+                background-color: #111e35;
+                display: flex;
+                flex-direction: row;
+                height: calc(100vh - 100px - 40px - 20px);
+                width: 100%;
+                margin-top: calc(100px + 40px + 20px);
+            }
+            .timeline {
+                background-color: #000;
+                width: calc(100% * 0.1);
+                height: 100%;
+            }
+            .time {
+                height: calc((100% / 24) - 1px);
+                border-bottom: 1px dotted #444444;
+            }
+            .time p {
+                text-align: right;
+                margin: 0;
+                height: 100%;
+            }
+            .day {
+                background-color: #000;
+                width: calc((100% - (100% * 0.1) - 1px)/ 7);
+                height: 100%;
+                border-left: 1px dotted #444444;
+                position: relative;
+            }
+            .time_day {
+                height: calc((100% / 24) - 1px);
+                border-bottom: 1px dotted #3f3f3f;
+                background-color: #000;
+            }
+            #d999 {
+                background-color: #00855294;
+                background-color: #001f8594;
+                background-color: #83850094;
+                background-color: #50008594;
+
+                background-color: #008552;
+                background-color: #001f85;
+                background-color: #838500;
+                background-color: #500085;
+            }
+            .about {
+                padding-left: calc((100% - 900px) / 2);
+                background-color: #111e35;
+                position: relative;
+                z-index: 999;
+            }
+            .about p {
+                text-align: left;
+                font-size: 22px;
+                width: 900px;
+                z-index: 999;
+            }
+            a {
+                color: #459cff;
+                display: block;
+                text-align: center;
+            }
+            a:hover {
+                background-color: #459cff;
+                color: #f5faff;
+            }
+
+            /* スマホ縦画面の場合（画面幅：768px以下） */
+            @media screen and (max-width: 768px) {
+                .time p {
+                    height: 100%;
+                }
+                .tab_youbi p {
+                    font-size: 18px;
+                }
+                .shujitsu_youbi p {
+                    font-size: 10px;
+                }
+                .field_header h1 {display: none;}
+                #now_str {display: none;}
+                .field_header p {
+                    font-size: 18px;
+                    margin-top: 50px;
+                }
+                .message {
+                    flex-direction: column;
+                }
+                #genzai {
+                    margin: 20px 0px 0px 0px;
+                }
+                #msg {
+                    font-size: 19px;
+                    margin-top: 10px;
+                }
+                .shujitsu_ari p{
+                    text-align: center;
+                    font-size: 12px;
+                    height: 200%;
+                    width: 100%;
+                    position: relative;
+                    bottom: 15px;
+                }
+    
+
+                .about {
+                    padding-left: calc((100% - 380px) / 2);
+                    background-color: #111e35;
+                }
+                .about p {
+                    text-align: left;
+                    font-size: 15px;
+                    width: 380px;
+                }
+            }
+        </style>
+
+        <!-- .gsから追加される部分　スタイル↓ -->
+        
+        <script src="https://code.jquery.com/jquery.min.js"></script>
+        <script>
+            // 表→裏
+            $(function() {
+                $(".hagaki_omote").click(function() {
+                    $(".hagaki_omote").animate({width: 0}, 150);
+                    $(".hagaki_ura").animate({width: 350}, 150);
+                    $(".hagaki_omote").toggle(150);
+                    $(".hagaki_ura").toggle(150);
+                })
+            })
+            // 裏→表
+            $(function() {
+                $(".hagaki_ura").click(function() {
+                    $(".hagaki_omote").animate({width: 350}, 150);
+                    $(".hagaki_ura").animate({width: 0}, 150);
+                    $(".hagaki_omote").toggle(150);
+                    $(".hagaki_ura").toggle(150);
+                })
+            })
+
+
+
+        </script>
+
+
+    </head>
+    <body bgcolor="#111e35">
+        <?!= style ?>
+            <?!= _css01 ?>
+            <?!= _yoteiStyle ?>
+            <!-- ここに終日イベント用のスタイルを作る？ -->
+        <?!= _style ?>
+        <div class="field_all">
+            <div class="field_header">
+                <h1>週間スケジュール</h1>
+                <p id="now_str"><?!= _now_str ?>　時点</p>
+                <div class="message">
+                    <p id="genzai"><?!= _lastName ?>は現在...　</p>
+                    <p id="msg"><?= _message ?></p>
+                </div>
+            </div>
+            <div class="field_tab">
+                <div class="tab_time"><p></p></div>
+                <div class="tab_youbi"><p style="font-weight: 700;"><?!= day1 ?></p></div>
+                <div class="tab_youbi"><p style="font-weight: 700;"><?!= day2 ?></p></div>
+                <div class="tab_youbi"><p style="font-weight: 700;"><?!= day3 ?></p></div>
+                <div class="tab_youbi"><p style="font-weight: 700;"><?!= day4 ?></p></div>
+                <div class="tab_youbi"><p style="font-weight: 700;"><?!= day5 ?></p></div>
+                <div class="tab_youbi"><p style="font-weight: 700;"><?!= day6 ?></p></div>
+                <div class="tab_youbi"><p style="font-weight: 700;"><?!= day7 ?></p></div>
+            </div>
+            <div class="field_shujitsu">
+                <div class="shujitsu_time"><p></p></div>
+                <?!= _shujitsu_youbi ?>
+            </div>
+            <div class="field_calendar">
+                <div class="timeline"><?!= _time ?></div>
+                <div class="day">
+                    <div id="now"></div>
+                    <div class="yotei"><?!= _yoteiAll ?></div><!-- 全ての予定はそれぞれdivタグとしてここに入る -->
+                    <?!= _time_day ?></div>
+                <div class="day"><?!= _time_day ?></div>
+                <div class="day"><?!= _time_day ?></div>
+                <div class="day"><?!= _time_day ?></div>
+                <div class="day"><?!= _time_day ?></div>
+                <div class="day"><?!= _time_day ?></div>
+                <div class="day"><?!= _time_day ?></div>
+            </div>
+        </div>
+        <!-- このページの説明を書く -->
+        <div class="about">
+            <p>
+                <br><br><br><br><br><br><br><br><br><br><br>
+                ■ 制作者　　：　<?!= _lastName ?> <?!= _firstName ?><br><br>
+                ■ 制作期間　：　24年04月26日 ～ 24年05月03日<br><br>
+                ■ 公開日　　：　24年05月03日 19時頃<br><br>
+                ■ メイン機能<br>
+                <span style="font-size: 80%;">
+                    　　- Googleカレンダーから1週間分の予定を取得し表示する<br>
+                    　　- 時刻と予定をもとに現在の<?!= _lastName ?>の状態を表示する（○○は現在...）<br><br>
+                </span>
+                ■ 諸情報／仕様<br>
+                <span style="font-size: 80%;">
+                    　　- 総デプロイ回数　：　213回<br>
+                    　　- 1/10 [h] の精度で予定が配置されます<br>
+                    　　- 予定の色はカレンダーの種類に対応<br>
+                    　　- 1週間分の予定, 直近30回のアクセス時刻をスプレッドシートに自動書き込み<br>
+                    
+                        <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSr5nNTtH8oF4ioeeDcFerGNxpMXQ_uphwr85eUAa2pd47ITjUdIvQQs7xyR3M85kDWTDIR2HM6TVKI/pubhtml">
+                            管理用ｽﾌﾟﾚｯﾄﾞｼｰﾄを開く（閲覧のみ, 同期に時間がかかります）↗<br>
+                        </a>
+                    　　- ↑仕様上, ブラウザとログイン状況によってはアクセス拒否されます. <br>
+                    　　- バグを見つけたら教えてください. 気が向いたときに修正します. <br><br>
+                </span>
+                ■ 仕組み<br>
+                <span style="font-size: 80%;">
+                    　　- ファイル構成　：　index.html, code.gs, appsscript.json<br>
+                    　　- GASを利用しGアカウントのカレンダー固有IDで予定を取得. <br>
+                    　　- .gsファイルの「Webページが読み込まれたときに実行される関数」内で情報を整理, html・cssの一部を整形し, 変数へ格納. <br>
+                    　　- index.html内に変数を埋め込む場所を用意しておき, .gsで作った文字列を渡すことで動的な表示がされる. <br><br>
+                </span>
+                ■ 参考図書<br>
+                <span style="font-size: 80%;">
+                    　　1) 近江幸吉, 佐藤香奈, 一政汐里　(2023),　Google Apps Script 目的別リファレンス実践サンプルコード付き第3版　秀和システム<br>
+                </span>
+                <br><br><br><br><br>
+            </p>
+            <p style="text-align: center;">
+                <?!= _count ?>
+                <br><br><br><br><br><br>
+            </p>
+        </div>
+    </body>
+        <!-- ------------------------------背景色を時間帯によって変える部分 -->
+    <script>
+        function changeColor() {
+            // JSで時間を取得
+            let currentTime = new Date().getHours();
+            console.log(currentTime);
+
+            // document.body が null でないか確認
+            if (document.body !== null) {
+                let body = document.body;
+
+                if (currentTime >= 6 && currentTime < 12) {
+                    // 朝：水色
+                    body.className = 'morning';
+                } else if (currentTime >= 12 && currentTime < 18) {
+                    // 昼：黄色
+                    body.className = 'afternoon';
+                } else {
+                    // 夜：紺色
+                    body.className = 'night';
+                }
+            } else {
+                console.error("document.body is null");
+            }
+        }
+
+        // 初回呼び出し
+        changeColor();
+
+        // 定期的に背景色を更新（例: 1秒ごと）
+        setInterval(changeColor, 1000);
+
+
+
+    </script>
+
+
+
+
+
+    </html>
