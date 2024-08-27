@@ -14,7 +14,7 @@ function doGet(e) {
                       '何かしらの予定が入っています',
                       '大学の講義中です',
                       'バイト中です',
-                      '就活に関する予定が入っています'];
+                      '割と重要な予定が入っています'];
 
 
 
@@ -125,11 +125,12 @@ function doGet(e) {
   endTime.setMinutes(59);
   endTime.setSeconds(59);
 
-  // 各カレンダーオブジェクトをIDを指定して取得
-  var calendar_my = CalendarApp.getCalendarById('anp7q1ccf1nh86hig6hjhci3ls@group.calendar.google.com');  // 「自分の予定」
-  var calendar_un = CalendarApp.getCalendarById('7coi1b38ama53a4831e0up0khg@group.calendar.google.com');  // 「大学」
-  var calendar_ba = CalendarApp.getCalendarById('tevkoseg5jsn5uqn5ojv76sm34@group.calendar.google.com');  // 「バイト」
-  var calendar_of = CalendarApp.getCalendarById('0ae9757d72398ce704713b7d1a8dbd75bd07287fd82df0f387327386d078498e@group.calendar.google.com');  // 現「就活」　就職後「仕事」（officeのof）
+
+  // 各カレンダーオブジェクトをIDを指定して取得（240827_2153 カレンダーIDはGASのスクリプトプロパティで環境変数として設定）
+  const calendar_my = CalendarApp.getCalendarById(PropertiesService.getScriptProperties().getProperty("CALENDAR_ID_GREEN"));
+  const calendar_un = CalendarApp.getCalendarById(PropertiesService.getScriptProperties().getProperty("CALENDAR_ID_BLUE"));
+  const calendar_ba = CalendarApp.getCalendarById(PropertiesService.getScriptProperties().getProperty("CALENDAR_ID_YELLOW"));
+  const calendar_of = CalendarApp.getCalendarById(PropertiesService.getScriptProperties().getProperty("CALENDAR_ID_PURPLE"));
 
   var weekEvents_my = calendar_my.getEvents(startTime, endTime);
   var weekEvents_un = calendar_un.getEvents(startTime, endTime);
